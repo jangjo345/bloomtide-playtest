@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#173638">
+  <link rel="icon" href="data:,">
+  <title>BLOOMTIDE</title>
+  <style>
+    :root { color-scheme:dark; background:#173638; }
+    * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+    html,body { width:100%; height:100%; margin:0; overflow:hidden; overscroll-behavior:none; touch-action:none; font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif; }
+    body { padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); background:linear-gradient(145deg,#173638,#274c49); }
+    #stage { position:fixed; inset:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); display:grid; place-items:center; }
+    #unity-canvas { position:absolute; inset:0; width:100%!important; height:100%!important; display:block; background:#173638; touch-action:none; }
+    #start,#rotate,#error { position:absolute; inset:0; display:grid; place-items:center; padding:28px; text-align:center; background:rgba(18,46,46,.94); z-index:5; }
+    #start-card { max-width:520px; }
+    #badge { display:inline-block; margin-bottom:16px; padding:6px 12px; border:1px solid rgba(240,193,116,.58); border-radius:999px; color:#f0c174; font-size:13px; letter-spacing:.04em; }
+    h1 { margin:0 0 12px; font-size:clamp(28px,5vw,48px); letter-spacing:.08em; color:#f2e8cf; }
+    p { margin:8px 0; color:#d5e4da; line-height:1.55; }
+    button { margin-top:20px; min-width:250px; min-height:56px; border:0; border-radius:28px; color:#173638; background:#f0c174; font-size:17px; font-weight:700; }
+    #progress-shell { width:min(72vw,420px); height:8px; margin:18px auto 0; border-radius:8px; overflow:hidden; background:rgba(255,255,255,.16); }
+    #progress { width:0; height:100%; background:#f0c174; transition:width .15s linear; }
+    #rotate,#error { display:none; }
+    #version { position:absolute; right:12px; bottom:8px; z-index:8; color:rgba(255,255,255,.5); font-size:11px; pointer-events:none; }
+    @media (orientation:portrait) { #rotate { display:grid; z-index:20; } }
+  </style>
+</head>
+<body>
+  <main id="stage" aria-label="BLOOMTIDE 개발 중 커플 시승판">
+    <canvas id="unity-canvas" tabindex="-1"></canvas>
+    <section id="start">
+      <div id="start-card">
+        <span id="badge">개발 중 커플 시승판</span>
+        <h1>BLOOMTIDE</h1>
+        <p>한 사람이 남긴 변화를, 다음 사람이 이어갑니다.</p>
+        <button id="start-button" type="button">화면을 한 번 눌러 시작하세요.</button>
+        <div id="progress-shell" hidden><div id="progress"></div></div>
+        <p id="loading">첫 화면을 준비하고 있습니다.</p>
+      </div>
+    </section>
+    <section id="rotate"><div><h1>아이폰을 가로로 돌려주세요.</h1><p>가로 화면에서 BLOOMTIDE를 시작할 수 있습니다.</p></div></section>
+    <section id="error"><div><h1>불러오지 못했어요</h1><p id="error-message">로딩에 실패한 경우 Safari에서 페이지를 다시 열어주세요.</p></div></section>
+    <small id="version">Preview 01 · 진행은 이 Safari 브라우저에만 저장됩니다.</small>
+  </main>
+  <script src="Build/WebPublicCouplePreview.loader.js"></script>
+  <script>
+    "use strict";
+    const canvas=document.querySelector("#unity-canvas"),start=document.querySelector("#start"),button=document.querySelector("#start-button"),progressShell=document.querySelector("#progress-shell"),progress=document.querySelector("#progress"),loading=document.querySelector("#loading"),error=document.querySelector("#error"),errorMessage=document.querySelector("#error-message");
+    let booting=false;
+    const config={dataUrl:"Build/WebPublicCouplePreview.data.unityweb",frameworkUrl:"Build/WebPublicCouplePreview.framework.js.unityweb",codeUrl:"Build/WebPublicCouplePreview.wasm.unityweb",streamingAssetsUrl:"StreamingAssets",companyName:"Bloomtide",productName:"Bloomtide",productVersion:"1.0"};
+    async function boot(){
+      if(booting)return; booting=true; button.disabled=true; progressShell.hidden=false; loading.textContent="게임을 불러오는 중…";
+      try{
+        const instance=await createUnityInstance(canvas,config,p=>{progress.style.width=Math.round(p*100)+"%";});
+        window.bloomtideUnity=instance; canvas.style.setProperty("width","100%","important"); canvas.style.setProperty("height","100%","important"); start.style.display="none";
+        const context=window.AudioContext||window.webkitAudioContext; if(context){ try{const audio=new context(); await audio.resume(); await audio.close();}catch(_){} }
+      }catch(reason){ console.error("[Bloomtide] Unity load failed",reason); errorMessage.textContent="로딩에 실패한 경우 Safari에서 페이지를 다시 열어주세요."; error.style.display="grid"; }
+    }
+    button.addEventListener("click",boot,{once:true});
+    window.addEventListener("resize",()=>{ canvas.style.setProperty("width","100%","important"); canvas.style.setProperty("height","100%","important"); });
+    document.addEventListener("touchmove",event=>event.preventDefault(),{passive:false});
+    document.addEventListener("gesturestart",event=>event.preventDefault(),{passive:false});
+    window.addEventListener("contextmenu",event=>event.preventDefault());
+  </script>
+</body>
+</html>
