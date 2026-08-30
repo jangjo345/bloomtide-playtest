@@ -44,12 +44,12 @@
     <section id="error"><div><h1>불러오지 못했어요</h1><p id="error-message">로딩에 실패한 경우 Safari에서 페이지를 다시 열어주세요.</p></div></section>
     <small id="version">Preview 01 · 진행은 이 Safari 브라우저에만 저장됩니다.</small>
   </main>
-  <script src="Build/WebPublicCouplePreview.loader.js"></script>
+  <script src="Build/WebPublicCouplePreview.loader.js?rev=joystick-hotfix-1"></script>
   <script>
     "use strict";
     const canvas=document.querySelector("#unity-canvas"),start=document.querySelector("#start"),button=document.querySelector("#start-button"),progressShell=document.querySelector("#progress-shell"),progress=document.querySelector("#progress"),loading=document.querySelector("#loading"),error=document.querySelector("#error"),errorMessage=document.querySelector("#error-message");
     let booting=false;
-    const config={dataUrl:"Build/WebPublicCouplePreview.data.unityweb",frameworkUrl:"Build/WebPublicCouplePreview.framework.js.unityweb",codeUrl:"Build/WebPublicCouplePreview.wasm.unityweb",streamingAssetsUrl:"StreamingAssets",companyName:"Bloomtide",productName:"Bloomtide",productVersion:"1.0"};
+    const config={dataUrl:"Build/WebPublicCouplePreview.data.unityweb?rev=joystick-hotfix-1",frameworkUrl:"Build/WebPublicCouplePreview.framework.js.unityweb?rev=joystick-hotfix-1",codeUrl:"Build/WebPublicCouplePreview.wasm.unityweb?rev=joystick-hotfix-1",streamingAssetsUrl:"StreamingAssets",companyName:"Bloomtide",productName:"Bloomtide",productVersion:"1.0"};
     async function boot(){
       if(booting)return; booting=true; button.disabled=true; progressShell.hidden=false; loading.textContent="게임을 불러오는 중…";
       try{
