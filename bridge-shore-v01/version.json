@@ -1,0 +1,9 @@
+{
+  "artifactVersion": "bridge-shore-v01",
+  "unityVersion": "6000.3.17f1",
+  "buildGuid": "9fc52a86d3f74e419b5dc71d239d3387",
+  "defaultLocale": "ko",
+  "hiddenTestLocale": "zh-Hans",
+  "sameDevicePrototypeOnly": true,
+  "twoDeviceSyncImplemented": false
+}

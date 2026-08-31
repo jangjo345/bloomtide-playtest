@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#173638">
+  <link rel="icon" href="data:,">
+  <title>BLOOMTIDE — 다리와 건너편 생활권 01</title>
+  <style>
+    :root{color-scheme:dark;background:#173638}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html,body{width:100%;height:100%;margin:0;overflow:hidden;overscroll-behavior:none;touch-action:none;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans CJK KR","PingFang SC","Microsoft YaHei",sans-serif}
+    body{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);background:#173638}
+    #world{position:fixed;inset:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);display:grid;place-items:center}
+    #unity-canvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block;background:#173638;touch-action:none}
+    #loading,#rotate,#error{position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;background:rgba(18,46,46,.94);z-index:5}
+    #loading-card{width:min(90vw,620px)}#badge{display:inline-block;margin-bottom:12px;padding:6px 12px;border:1px solid rgba(240,193,116,.58);border-radius:999px;color:#f0c174;font-size:13px}
+    h1{margin:0 0 10px;font-size:clamp(27px,5vw,44px);letter-spacing:.03em;color:#f2e8cf}p{margin:7px 0;color:#d5e4da;line-height:1.48}
+    #progress-shell{width:min(72vw,420px);height:8px;margin:14px auto 0;border-radius:8px;overflow:hidden;background:rgba(255,255,255,.16)}#progress{width:0;height:100%;background:#f0c174;transition:width .15s linear}
+    #rotate,#error{display:none}#version{position:absolute;right:12px;bottom:8px;z-index:8;color:rgba(255,255,255,.62);font-size:11px;pointer-events:none}
+    @media(orientation:portrait){#rotate{display:grid;z-index:20}}@media(max-height:410px){#loading,#rotate,#error{padding:12px}#badge{margin-bottom:7px}h1{margin-bottom:5px}p{margin:4px 0;line-height:1.35}}
+  </style>
+</head>
+<body>
+  <main id="world" aria-label="BLOOMTIDE 다리와 두 생활터 진행 시승">
+    <canvas id="unity-canvas" tabindex="-1" aria-label="BLOOMTIDE 다리와 두 생활터 게임 화면"></canvas>
+    <section id="loading"><div id="loading-card"><span id="badge">로컬 진행 시승 01</span><h1 id="loading-title">다리와 건너편 생활터를 준비하고 있어요</h1><p id="loading-copy">작은 마당에서 강변으로 이어지는 세계를 불러오는 중입니다.</p><div id="progress-shell"><div id="progress"></div></div></div></section>
+    <section id="rotate"><div><h1 id="rotate-title">아이폰을 가로로 돌려주세요</h1><p id="rotate-copy">가로 화면에서 두 생활터와 다리를 편하게 둘러볼 수 있습니다.</p></div></section>
+    <section id="error"><div><h1 id="error-title">불러오지 못했어요</h1><p id="error-copy">진행 시승 세계를 불러오지 못했어요. 새로고침한 뒤 다시 시도해 주세요.</p></div></section>
+    <small id="version">로컬 검토용 · 진행은 이 브라우저에만 저장됩니다.</small>
+  </main>
+  <script src="Build/WebReview.loader.js"></script>
+  <script>
+    "use strict";
+    const STORAGE_KEY="bloomtide.broken-bridge-second-shore.ui-language";
+    const UNITY_TARGET="Broken Bridge Second Shore Systems";
+    const UNITY_METHOD="SetWebLanguage";
+    const copy={
+      "ko-KR":{html:"ko",title:"BLOOMTIDE — 다리와 건너편 생활권 01",badge:"로컬 진행 시승 01",loadingTitle:"다리와 건너편 생활터를 준비하고 있어요",loading:"작은 마당에서 강변으로 이어지는 세계를 불러오는 중입니다.",rotateTitle:"아이폰을 가로로 돌려주세요",rotate:"가로 화면에서 두 생활터와 다리를 편하게 둘러볼 수 있습니다.",errorTitle:"불러오지 못했어요",error:"진행 시승 세계를 불러오지 못했어요. 새로고침한 뒤 다시 시도해 주세요.",version:"로컬 검토용 · 진행은 이 브라우저에만 저장됩니다.",worldAria:"BLOOMTIDE 다리와 두 생활터 진행 시승",canvasAria:"BLOOMTIDE 다리와 두 생활터 게임 화면"},
+      "zh-Hans":{html:"zh-CN",title:"BLOOMTIDE — 断桥与河对岸生活区 01",badge:"本地进度试玩 01",loadingTitle:"正在准备断桥和河对岸的生活区",loading:"正在打开从小院延伸到河边的世界。",rotateTitle:"请把手机横过来",rotate:"横屏时会更方便查看两边的生活区和桥。",errorTitle:"没有顺利打开",error:"进度试玩世界没有顺利打开，请刷新页面再试一次。",version:"仅供本地评审 · 进度只保存在这个浏览器里。",worldAria:"BLOOMTIDE 断桥与两岸生活区进度试玩",canvasAria:"BLOOMTIDE 断桥与两岸生活区游戏画面"}
+    };
+    const normalize=value=>{const text=(value||"").trim().toLowerCase();if(text==="zh"||text==="zh-cn"||text==="zh-hans")return "zh-Hans";if(text==="ko"||text==="ko-kr")return "ko-KR";return null};
+    const params=new URLSearchParams(location.search);const queryLanguage=normalize(params.get("lang"));let stored=null;
+    try{stored=normalize(localStorage.getItem(STORAGE_KEY))}catch(_){}
+    let language=queryLanguage||stored||"ko-KR";
+    const canvas=document.querySelector("#unity-canvas"),world=document.querySelector("#world"),loading=document.querySelector("#loading"),progress=document.querySelector("#progress"),error=document.querySelector("#error");
+    function applyCopy(){const value=copy[language];document.documentElement.lang=value.html;document.title=value.title;document.querySelector("#badge").textContent=value.badge;document.querySelector("#loading-title").textContent=value.loadingTitle;document.querySelector("#loading-copy").textContent=value.loading;document.querySelector("#rotate-title").textContent=value.rotateTitle;document.querySelector("#rotate-copy").textContent=value.rotate;document.querySelector("#error-title").textContent=value.errorTitle;document.querySelector("#error-copy").textContent=value.error;document.querySelector("#version").textContent=value.version;world.setAttribute("aria-label",value.worldAria);canvas.setAttribute("aria-label",value.canvasAria)}
+    window.BloomtideSetActiveLanguage=locale=>{const next=normalize(locale);if(!next)return;language=next;try{localStorage.setItem(STORAGE_KEY,next)}catch(_){}applyCopy();document.body.dataset.unityLocaleSync="received"};
+    const revision=params.get("r"),suffix=revision?"?r="+encodeURIComponent(revision):"";
+    const config={dataUrl:"Build/WebReview.data.unityweb"+suffix,frameworkUrl:"Build/WebReview.framework.js.unityweb"+suffix,codeUrl:"Build/WebReview.wasm.unityweb"+suffix,streamingAssetsUrl:"StreamingAssets",companyName:"Bloomtide",productName:"BLOOMTIDE",productVersion:"broken-bridge-second-shore-v01",cacheControl:url=>revision&&url.includes("?r=")?"immutable":"must-revalidate"};
+    async function boot(){try{const instance=await createUnityInstance(canvas,config,value=>{progress.style.width=Math.round(value*100)+"%"});window.bloomtideUnity=instance;try{instance.SendMessage(UNITY_TARGET,UNITY_METHOD,language);document.body.dataset.localeBridge="sent"}catch(_){document.body.dataset.localeBridge="unavailable"}canvas.style.setProperty("width","100%","important");canvas.style.setProperty("height","100%","important");loading.style.display="none";document.querySelector("#version").style.display="none"}catch(reason){console.error("[Bloomtide] local progression load failed",reason);error.style.display="grid"}}
+    addEventListener("resize",()=>{canvas.style.setProperty("width","100%","important");canvas.style.setProperty("height","100%","important")});document.addEventListener("touchmove",event=>event.preventDefault(),{passive:false});document.addEventListener("gesturestart",event=>event.preventDefault(),{passive:false});addEventListener("contextmenu",event=>event.preventDefault());applyCopy();boot();
+  </script>
+</body>
+</html>
