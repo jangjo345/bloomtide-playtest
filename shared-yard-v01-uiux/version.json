@@ -1,0 +1,10 @@
+{
+  "candidate": "shared-yard-v01-uiux",
+  "status": "OWNER IPHONE UIUX PREFLIGHT REQUIRED",
+  "canonicalLanguage": "ko-KR",
+  "hiddenTestLocale": "zh-Hans",
+  "hiddenTestLocaleStatus": "NOT A LAUNCH LANGUAGE",
+  "buildGuid": "8596cb7eae0f42c4844a66fdd8e4f1fd",
+  "webEntrySha256": "8ac9d784d0b8f38f87b0681359101d6b65ff4fa38e92e360265f3eeb3a576304",
+  "deployedDateKst": "2026-08-31"
+}
