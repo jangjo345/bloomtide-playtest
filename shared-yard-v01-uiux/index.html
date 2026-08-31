@@ -63,7 +63,9 @@
     let activeLanguage=queryLanguage||storedLanguage||"ko-KR";
     const canvas=document.querySelector("#unity-canvas"),yard=document.querySelector("#yard"),start=document.querySelector("#start"),button=document.querySelector("#start-button"),progressShell=document.querySelector("#progress-shell"),progress=document.querySelector("#progress"),loading=document.querySelector("#loading"),error=document.querySelector("#error"),errorMessage=document.querySelector("#error-message");
     let booting=false;
-    const config={dataUrl:"Build/WebReview.data.unityweb",frameworkUrl:"Build/WebReview.framework.js.unityweb",codeUrl:"Build/WebReview.wasm.unityweb",streamingAssetsUrl:"StreamingAssets",companyName:"Bloomtide",productName:"BLOOMTIDE",productVersion:"mobile-world-first-uiux-runtime-v01"};
+    const revision=new URLSearchParams(window.location.search).get("r");
+    const assetRevision=revision?"?r="+encodeURIComponent(revision):"";
+    const config={dataUrl:"Build/WebReview.data.unityweb"+assetRevision,frameworkUrl:"Build/WebReview.framework.js.unityweb"+assetRevision,codeUrl:"Build/WebReview.wasm.unityweb"+assetRevision,streamingAssetsUrl:"StreamingAssets",companyName:"Bloomtide",productName:"BLOOMTIDE",productVersion:"mobile-world-first-uiux-runtime-v01",cacheControl:url=>revision&&url.includes("?r=")?"immutable":"must-revalidate"};
     function applyCopy(){
       const copy=copies[activeLanguage];
       document.documentElement.lang=copy.html; document.title=copy.title;
