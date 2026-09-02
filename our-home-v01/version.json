@@ -1,0 +1,12 @@
+{
+  "release": "our-home-v01",
+  "status": "owner-solo-human-milestone-candidate",
+  "unityVersion": "6000.3.17f1",
+  "buildGuid": "0e6b80d56e204696b192f2a5fbd2a898",
+  "sceneCount": 1,
+  "defaultLocale": "ko-KR",
+  "hiddenTechnicalLocale": "zh-Hans",
+  "analytics": false,
+  "tracking": false,
+  "dateKst": "2026-09-02"
+}
