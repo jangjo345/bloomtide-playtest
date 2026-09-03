@@ -1,0 +1,10 @@
+{
+    "slice": "lived-in-home-daily-choice-v01",
+    "buildGuid": "a3ca6f0e78a34777979620c360fc6dda",
+    "unityVersion": "6000.3.17f1",
+    "scene": "Assets/Scenes/LivedInHomeDailyChoiceLoopV01.unity",
+    "shell": "canonical-template-plus-deterministic-output-postprocessor-v01",
+    "noIndex": true,
+    "analytics": false,
+    "externalRequests": false
+}
