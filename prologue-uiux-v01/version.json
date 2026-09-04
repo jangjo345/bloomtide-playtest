@@ -1,0 +1,10 @@
+{
+    "slice": "prologue-uiux-v01",
+    "buildGuid": "3792bc8d2d5f4ad7bb33589fa979fe45",
+    "unityVersion": "6000.3.17f1",
+    "scene": "Assets/Scenes/BloomtidePrologueFirstPurposePlayableV01.unity",
+    "shell": "world-quiet-caretaker-v01",
+    "noIndex": true,
+    "analytics": false,
+    "externalRequests": false
+}
